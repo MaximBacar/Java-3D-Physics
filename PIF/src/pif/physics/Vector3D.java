@@ -26,5 +26,11 @@ public class Vector3D {
 		return new Vector3D(this.x + v.x, this.y + v.y, this.z + v.z);
 	}
 	
+	public static Vector3D add (Vector3D v1, Vector3D v2) {
+		
+		return new Vector3D(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+		
+	}
+	
 
 }
