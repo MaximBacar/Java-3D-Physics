@@ -2,6 +2,7 @@ package pif.points;
 
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.util.Arrays;
 
 public class Matrix {
 	
@@ -105,13 +106,21 @@ public class Matrix {
 	
 	public static Point2D[] to2d (Point3D[] pts) {
 		
+		
 		Point2D[] p = new Point[pts.length];
-		double e = 65;
+		double e = 6500;
+		
+		
+		for (int i = 0; i<p.length; i++) {
+			p[i] = new Point();
+		}
 		
 		for (int i = 0; i<pts.length; i++) {
 			
 			p[i].setLocation( (-1*e*(pts[i].y)) / (pts[i].x-e), (-1*e*(pts[i].z - 0)) / (pts[i].x-e));
 		}
+		
+		System.out.println(Arrays.toString(p));
 		
 		return p;
 	}

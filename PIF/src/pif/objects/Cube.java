@@ -1,25 +1,30 @@
 package pif.objects;
 
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import pif.points.Matrix;
 import pif.points.Point3D;
 
 public class Cube {
 	
-	private int [][] pos = {
+	
+	int [][] pos = {
 			
-	//			x	 y	  z
-			 {-1,-1,-1},
-			 { 1,-1,-1},
-			 { 1, 1,-1},
-			 {-1, 1,-1},
-			 {-1,-1, 1},
-			 { 1,-1, 1},
-			 { 1, 1, 1},
-			 {-1, 1, 1},
+//			x	 y	  z
+			 {-500,-500 ,-500},
+			 {500,-500,-500},
+			 {500,500,-500},
+			 {-500,500,-500},
+			 {-500,-500,500},
+			 {500,-500,500},
+			 {500,500,500},
+			 {-500,500,500},
 
 	};
 	
-	private Point3D [] pts = new Point3D [pos.length];
+	
 	
 	
 	private float xDegrees;
@@ -30,14 +35,19 @@ public class Cube {
 	private int posY;
 	private int posZ;
 	
+	ArrayList<Point3D> pts;
+	Polygon3D p1;
+	
 	public Cube() {
 		
-		for (int i = 0; i < pts.length; i++) {
+		pts = new ArrayList<Point3D>();
+		
+		
+		
+		for (int i = 0; i < pos.length; i++) {
 			
-			pts[i].x = pos[i][0];
-			pts[i].y = pos[i][1];
-			pts[i].z = pos[i][2];
-			
+
+			pts.add(new Point3D(pos[i][0], pos[i][1], pos[i][2]));
 		}
 		
 		xDegrees = 0;
@@ -48,16 +58,41 @@ public class Cube {
 		posY = 0;
 		posZ = 0;
 		
+		
+		p1 = new Polygon3D(pts.get(1), pts.get(2), pts.get(6), pts.get(5));
+		
+	}
+	
+	public Cube(int x, int y, int z) {
+		
+		for (int i = 0; i < pts.size(); i++) {
+			
+			pts.get(i).x = pos[i][0];
+			pts.get(i).y = pos[i][1];
+			pts.get(i).z = pos[i][2];
+			
+		}
+		
+		xDegrees = 0;
+		yDegrees = 0;
+		zDegrees = 0;
+		
+		posX = x;
+		posY = y;
+		posZ = z;
+		translate(posX, posY, posZ);
+		
 	}
 	
 	public void rotate (float degX, float degY, float degZ) {
 		
-		Matrix.rotation(degX, degY, degZ, pts);
+		Matrix.rotation(degX, degY, degZ, pts.toArray(new Point3D[pts.size()]));
+		
 		
 	}
 	
-	private void translate (int dx, int dy, int dz) {
-		Matrix.translation(dx, dy, dz, pts);
+	public void translate (int dx, int dy, int dz) {
+		Matrix.translation(dx, dy, dz, pts.toArray(new Point3D[pts.size()]));
 	}
 	
 	
@@ -118,8 +153,15 @@ public class Cube {
 	}
 
 	public Point3D[] getPts() {
-		return pts;
+		return pts.toArray(new Point3D[pts.size()]);
 	}
+	
+	
+	public void render(Graphics2D g2d) {
+		p1.render(g2d);
+	}
+	
+	
 	
 	
 	

@@ -1,6 +1,12 @@
 package pif.engine;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import javax.swing.JPanel;
+
+import pif.objects.Cube;
 
 public class Render extends JPanel implements Runnable{
 	
@@ -11,9 +17,13 @@ public class Render extends JPanel implements Runnable{
 	
 	private Thread processusAnim;
 	
-	
+	Cube c;
 	
 	public Render () {
+		
+		
+		
+		c = new Cube();
 		
 		processusAnim = new Thread(this);
 		processusAnim.start();
@@ -22,10 +32,34 @@ public class Render extends JPanel implements Runnable{
 
 	@Override
 	public void run() {
+		float i = 0;
 		while (true) {
 			//System.out.println("percs");
+			i+= 0;
+			
+			repaint();
+			c.translate(0, (int)-i, 0);
+			try {
+				Thread.sleep(1000/100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
+		
+		g2d.setColor(Color.red);
+		//g2d.drawRect(100, 100, 200, 200);
+		c.render(g2d);
+		
+		
+	}
+	
+	
 
 }
