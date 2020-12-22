@@ -1,5 +1,8 @@
 package pif.points;
 
+import java.awt.Point;
+import java.awt.geom.Point2D;
+
 public class Matrix {
 	
 	public static int [][] multiplyMat(int[][] pts, double[][] mat){
@@ -98,6 +101,19 @@ public class Matrix {
 		
 		return pts;
 		
+	}
+	
+	public static Point2D[] to2d (Point3D[] pts) {
+		
+		Point2D[] p = new Point[pts.length];
+		double e = 65;
+		
+		for (int i = 0; i<pts.length; i++) {
+			
+			p[i].setLocation( (-1*e*(pts[i].y)) / (pts[i].x-e), (-1*e*(pts[i].z - 0)) / (pts[i].x-e));
+		}
+		
+		return p;
 	}
 
 }
