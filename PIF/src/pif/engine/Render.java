@@ -23,7 +23,7 @@ public class Render extends JPanel implements Runnable{
 	@Override
 	public void run() {
 		while (true) {
-			System.out.println("percs");
+			//System.out.println("percs");
 		}
 		
 	}

@@ -15,6 +15,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import pif.engine.Render;
+import pif.physics.Vector3D;
 
 public class Application extends JFrame{
 	
@@ -55,6 +56,11 @@ public class Application extends JFrame{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
+		
+		Vector3D v = new Vector3D(3,3,3);
+		Vector3D.toString(v);
+		v = v.scalarMultiplication(10);
+		Vector3D.toString(v);
 		
 		
 		renderer = new Render();

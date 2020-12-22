@@ -32,5 +32,16 @@ public class Vector3D {
 		
 	}
 	
+	
+	public Vector3D scalarMultiplication (double k) {
+		
+		return new Vector3D( k*x, k*y, k*z);
+		
+	}
+	
+	public static void toString (Vector3D v) {
+		System.out.println("[X="+v.x+" Y="+v.y+" Z="+v.z+"]");
+	}
+	
 
 }
