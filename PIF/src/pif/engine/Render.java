@@ -1,5 +1,14 @@
 package pif.engine;
 
-public class Render {
+import javax.swing.JPanel;
+
+public class Render extends JPanel{
+	
+	
+	public Render () {
+		
+		
+		
+	}
 
 }

@@ -3,9 +3,9 @@ package pif.points;
 
 public class Point3D {
 	
-	int x;
-	int y;
-	int z;
+	public int x;
+	public int y;
+	public int z;
 	
 	
 	
@@ -22,41 +22,7 @@ public class Point3D {
 		
 	}
 	
-	public void setX (int x) {
-		
-		this.x = x;
-		
-	}
-	
-	public void setY (int y) {
-		
-		this.y = y;
-		
-	}
-	
-	public void setZ (int z) {
-		
-		this.z = z;
-		
-	}
-	
-	public int x () {
-		
-		return x;
-		
-	}
-	
-	public int y () {
-		
-		return y;
-		
-	}
-	
-	public int z () {
-		
-		return z;
-		
-	}
+
 	
 	public float distance (Point3D p) {
 		

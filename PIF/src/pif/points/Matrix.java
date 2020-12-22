@@ -24,15 +24,15 @@ public class Matrix {
 		}
 		
 		for (int i = 0; i<pts.length; i++) {
-			pts[i].setX(nvxMat[i][0]);
-			pts[i].setY(nvxMat[i][1]);
-			pts[i].setZ(nvxMat[i][2]);
+			pts[i].x = (nvxMat[i][0]);
+			pts[i].y = (nvxMat[i][1]);
+			pts[i].z = (nvxMat[i][2]);
 		}
 		
 		return pts;
 	}
 	
-	public static Point3D[] rotation (int degX, int degY, int degZ, Point3D[] pts){
+	public static Point3D[] rotation (float degX, float degY, float degZ, Point3D[] pts){
 		
 		double[][] matRotZ = {
 				 {Math.cos(Math.toRadians(degZ)) , -Math.sin(Math.toRadians(degZ)), 0},
@@ -79,6 +79,21 @@ public class Matrix {
 		}
 		
 		pts = multiplyMat(pts, matRotX);
+		
+		
+		return pts;
+		
+	}
+	
+	public static Point3D[] translation (int dx, int dy, int dz , Point3D[] pts) {
+		
+		for (int i = 0; i < pts.length; i++) {
+			
+			pts[i].x = pts[i].x + dx;
+			pts[i].y = pts[i].y + dy;
+			pts[i].z = pts[i].z + dz;
+			
+		}
 		
 		
 		return pts;
