@@ -25,6 +25,7 @@ public class Polygon3D {
 		for (int i = 0; i < pts.length; i++) {
 			polygon.addPoint(p[i].x , p[i].y);
 			
+			g2d.draw(polygon);
 			
 		}
 	}
