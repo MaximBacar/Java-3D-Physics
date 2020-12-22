@@ -2,9 +2,9 @@ package pif.physics;
 
 public class Vector3D {
 	
-	private double x;
-	private double y;
-	private double z;
+	protected double x;
+	protected double y;
+	protected double z;
 	
 	public Vector3D () {
 		
@@ -20,6 +20,10 @@ public class Vector3D {
 		this.y = y;
 		this.z = z;
 		
+	}
+	
+	public Vector3D add (Vector3D v) {
+		return new Vector3D(this.x + v.x, this.y + v.y, this.z + v.z);
 	}
 	
 
