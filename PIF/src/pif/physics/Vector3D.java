@@ -2,9 +2,9 @@ package pif.physics;
 
 public class Vector3D {
 	
-	protected double x;
-	protected double y;
-	protected double z;
+	private double x;
+	private double y;
+	private double z;
 	
 	public Vector3D () {
 		
@@ -23,13 +23,7 @@ public class Vector3D {
 	}
 	
 	public Vector3D add (Vector3D v) {
-		return new Vector3D(this.x + v.x, this.y + v.y, this.z + v.z);
-	}
-	
-	public static Vector3D add (Vector3D v1, Vector3D v2) {
-		
-		return new Vector3D(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
-		
+		return new Vector3D(this.x + v.getX(), this.y + v.getY(), this.z + v.getZ());
 	}
 	
 	
@@ -39,9 +33,47 @@ public class Vector3D {
 		
 	}
 	
+	public  static Vector3D scalarMultiplication (Vector3D v, double k) {
+		
+		return new Vector3D( k*v.getX(), k*v.getY(), k*v.getZ());
+		
+	}
+	
+	public double dotProduct (Vector3D v) {
+		return v.x * x + v.y * y + v.z * z;
+	}
+	
+	
+	
 	public static void toString (Vector3D v) {
 		System.out.println("[X="+v.x+" Y="+v.y+" Z="+v.z+"]");
 	}
+
+	public double getX() {
+		return x;
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	public double getZ() {
+		return z;
+	}
+
+	public void setZ(double z) {
+		this.z = z;
+	}
+	
+	
 	
 
 }

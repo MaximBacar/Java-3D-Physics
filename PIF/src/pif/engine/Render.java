@@ -57,16 +57,18 @@ public class Render extends JPanel implements Runnable{
 			if (i > 360) i = 0;
 				
 			
-			
-			c.setzDegrees(i);
-			c.setxDegrees(i);
+			c.setxDegrees(0);
 			c.setyDegrees(i);
-			c.setPosZ(2);
+			c.setzDegrees(i);
+			
+			
+			c.setPosZ(-1000);
+			c.setPosY(-1000);
 			repaint();
 			
 			
 			try {
-				Thread.sleep(1000/100);
+				Thread.sleep(1000/140);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
