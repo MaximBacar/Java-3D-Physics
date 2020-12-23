@@ -24,6 +24,10 @@ public class Polygon3D {
 		
 	}
 	
+	public void newPts (Point3D...pts) {
+		this.pts = pts;
+	}
+	
 	public void render(Graphics2D g2d) {
 		Polygon polygon = new Polygon();
 		Point[] p = (Point[]) Matrix.to2d(pts);

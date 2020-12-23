@@ -26,9 +26,10 @@ public class Render extends JPanel implements Runnable{
 	boolean running = false;
 	
 	double tempsTotalEcoule = 0;
-	private double deltaT = 0.010;
+	private double deltaT = 0.017;
 	
 	Cube c;
+	
 	
 	public Render () {
 		
@@ -44,6 +45,7 @@ public class Render extends JPanel implements Runnable{
 		
 		
 		c = new Cube();
+		
 		
 		processusAnim = new Thread(this);
 		processusAnim.start();
@@ -63,7 +65,7 @@ public class Render extends JPanel implements Runnable{
 			
 			
 			try {
-				Thread.sleep(1000/500);
+				Thread.sleep(1000/144);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

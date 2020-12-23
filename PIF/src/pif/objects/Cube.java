@@ -57,7 +57,7 @@ public class Cube {
 	public Cube() {
 		
 	
-		mass = 1;
+		mass = 50;
 		points = new Point3D[pos.length];
 		polygons = new Polygon3D[6];
 		
@@ -91,6 +91,13 @@ public class Cube {
 		velocity = new Vector3D();
 		acceleration = new Vector3D();
 		
+		polygons[0] = new Polygon3D(newPoints[0], newPoints[1], newPoints[2], newPoints[3]);
+		polygons[1] = new Polygon3D(newPoints[1], newPoints[2], newPoints[6], newPoints[5]);
+		polygons[2] = new Polygon3D(newPoints[4], newPoints[5], newPoints[6], newPoints[7]);
+		polygons[3] = new Polygon3D(newPoints[0], newPoints[3], newPoints[7], newPoints[4]);
+		polygons[4] = new Polygon3D(newPoints[0], newPoints[1], newPoints[5], newPoints[4]);
+		polygons[5] = new Polygon3D(newPoints[2], newPoints[3], newPoints[7], newPoints[6]);
+		
 		
 	}
 	
@@ -116,6 +123,8 @@ public class Cube {
 			newPoints[i].setY(points[i].getY());
 			newPoints[i].setZ(points[i].getZ());
 		}
+		
+		
 		
 		
 		xDegrees = 0;
@@ -256,24 +265,26 @@ public class Cube {
 		rotateTranslate(xDegrees, yDegrees, zDegrees, posX, posY, posZ);
 		
 		
-		polygons[0] = new Polygon3D(newPoints[0], newPoints[1], newPoints[2], newPoints[3]);
-		polygons[1] = new Polygon3D(newPoints[1], newPoints[2], newPoints[6], newPoints[5]);
-		polygons[2] = new Polygon3D(newPoints[4], newPoints[5], newPoints[6], newPoints[7]);
-		polygons[3] = new Polygon3D(newPoints[0], newPoints[3], newPoints[7], newPoints[4]);
-		polygons[4] = new Polygon3D(newPoints[0], newPoints[1], newPoints[5], newPoints[4]);
-		polygons[5] = new Polygon3D(newPoints[2], newPoints[3], newPoints[7], newPoints[6]);
+		polygons[0].newPts(newPoints[0], newPoints[1], newPoints[2], newPoints[3]);
+		polygons[1].newPts(newPoints[1], newPoints[2], newPoints[6], newPoints[5]);
+		polygons[2].newPts(newPoints[4], newPoints[5], newPoints[6], newPoints[7]);
+		polygons[3].newPts(newPoints[0], newPoints[3], newPoints[7], newPoints[4]);
+		polygons[4].newPts(newPoints[0], newPoints[1], newPoints[5], newPoints[4]);
+		polygons[5].newPts(newPoints[2], newPoints[3], newPoints[7], newPoints[6]);
 		
 		
 		
 		
 		
 		for (Polygon3D poly : polygons) {
+			
 			poly.render(g2d);
 		}
 	}
 	
 	
 	public void oneStep(double deltaT) {
+		
 		gravityF = physicsEngine.calculForceGrav(mass);
 
 
@@ -286,7 +297,8 @@ public class Cube {
 		position = physicsEngine.calculPosition(deltaT, position, velocity);
 		
 		Vector3D.toString(position);
-		//creerLaGeometrie(); //la position a changé! on recree notre cercle
+		
+		
 		posX = (int) position.getX()*100;
 		posY = (int) position.getY()*100;
 		posZ = (int) position.getZ()*100;
@@ -295,6 +307,11 @@ public class Cube {
 		if(posZ <= -2600 ) {
 			
 			velocity.setZ(-0.8*velocity.getZ());
+		}
+		
+		if(posZ <= -2610 ) {
+			
+			posZ = -2610;
 		}
 
 	}
