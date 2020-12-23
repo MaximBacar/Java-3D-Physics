@@ -87,7 +87,7 @@ public class Cube {
 		acceleration = new Vector3D();
 		
 		gravityF = physicsEngine.calculForceGrav(mass);
-		frictionF = new Vector3D();
+		frictionF = new Vector3D(0,0,10000);
 		
 		polygons[0] = new Polygon3D(newPoints[0], newPoints[1], newPoints[2], newPoints[3]);
 		polygons[1] = new Polygon3D(newPoints[1], newPoints[2], newPoints[6], newPoints[5]);
@@ -269,6 +269,8 @@ public class Cube {
 		
 		
 		totalForces = frictionF.add(gravityF);
+		
+		Vector3D.toString(frictionF);
 
 		try {
 			acceleration = physicsEngine.calculAcceleration(totalForces, mass);
