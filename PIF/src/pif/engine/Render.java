@@ -32,13 +32,15 @@ public class Render extends JPanel implements Runnable{
 
 	@Override
 	public void run() {
-		float i = 0;
+		float i = 1;
 		while (true) {
-			//System.out.println("percs");
-			i+= 0;
 			
+			i++;
+			c.setzDegrees(i);
+			c.setPosZ(2);
 			repaint();
-			c.translate(0, (int)-i, 0);
+			//c.translate(0, (int)-i, 0);
+			
 			try {
 				Thread.sleep(1000/100);
 			} catch (InterruptedException e) {

@@ -13,18 +13,21 @@ public class Polygon3D {
 	private final static int HEIGHT = 500;
 	private final static int WIDTH = 1000;
 	
+	Matrix mat;
+	
 	
 	Point3D[] pts;
 	
 	public Polygon3D (Point3D...pts) {
 		
 		this.pts = pts;
+		mat = new Matrix();
 		
 	}
 	
 	public void render(Graphics2D g2d) {
 		Polygon polygon = new Polygon();
-		Point[] p = (Point[]) Matrix.to2d(pts);
+		Point[] p = (Point[]) mat.to2d(pts);
 		for (int i = 0; i < pts.length; i++) {
 			polygon.addPoint(meterToPixel(p[i].x) , meterToPixely(p[i].y));
 			

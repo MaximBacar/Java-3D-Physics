@@ -57,10 +57,7 @@ public class Application extends JFrame{
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 		
-		Vector3D v = new Vector3D(3,3,3);
-		Vector3D.toString(v);
-		v = v.scalarMultiplication(10);
-		Vector3D.toString(v);
+		
 		
 		
 		renderer = new Render();
