@@ -24,9 +24,6 @@ public class Point3D {
 		
 	}
 	
-
-	
-
 	
 	public float distance (Point3D p) {
 		
@@ -36,7 +33,7 @@ public class Point3D {
 	
 	
 	public static void toString(Point3D p) {
-		System.out.println("[X="+p.x+" Y="+p.y+" Z="+p.z+"]");
+		System.out.println("[X = "+p.x+", Y = "+p.y+", Z ="+p.z+"]");
 	}
 
 

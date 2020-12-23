@@ -61,7 +61,7 @@ public class Application extends JFrame{
 		
 		
 		renderer = new Render();
-		renderer.setBounds(0, 0, 1000, 1000);
+		renderer.setBounds(0, 0, 1000, 800);
 		renderer.setLayout(null);
 		renderer.setOpaque(false);
 		contentPane.add(renderer);
