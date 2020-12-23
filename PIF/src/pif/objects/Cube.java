@@ -6,6 +6,9 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
+import pif.physics.Vector3D;
+import pif.physics.physicsEngine;
 import pif.points.Matrix;
 import pif.points.Point3D;
 
@@ -14,7 +17,7 @@ public class Cube {
 	
 	final int [][] pos = {
 			
-//			x	 y	  z
+//				x	 y	  z
 			 {-500,-500 ,-500},
 			 {500,-500,-500},
 			 {500,500,-500},
@@ -40,10 +43,21 @@ public class Cube {
 	private Point3D[] points;
 	private Point3D[] newPoints;
 	
+	
+	private double mass;
+	
+	private Vector3D position;
+	private Vector3D velocity;
+	private Vector3D acceleration;
+	
+	private Vector3D frictionF;
+	private Vector3D gravityF;
+	private Vector3D totalForces;
+	
 	public Cube() {
 		
 	
-		
+		mass = 1;
 		points = new Point3D[pos.length];
 		polygons = new Polygon3D[6];
 		
@@ -73,6 +87,9 @@ public class Cube {
 		posY = 0;
 		posZ = 0;
 		 
+		position = new Vector3D(posX,posY,posZ);
+		velocity = new Vector3D();
+		acceleration = new Vector3D();
 		
 		
 	}
@@ -253,6 +270,33 @@ public class Cube {
 		for (Polygon3D poly : polygons) {
 			poly.render(g2d);
 		}
+	}
+	
+	
+	public void oneStep(double deltaT) {
+		gravityF = physicsEngine.calculForceGrav(mass);
+
+
+		try {
+			acceleration = physicsEngine.calculAcceleration(gravityF, mass);
+		} catch (Exception e) {
+			System.out.println("Erreur calcul accélération (masse nulle)");
+		}
+		velocity = physicsEngine.calculVitesse(deltaT, velocity, acceleration);
+		position = physicsEngine.calculPosition(deltaT, position, velocity);
+		
+		Vector3D.toString(position);
+		//creerLaGeometrie(); //la position a changé! on recree notre cercle
+		posX = (int) position.getX()*100;
+		posY = (int) position.getY()*100;
+		posZ = (int) position.getZ()*100;
+		
+		
+		if(posZ <= -2600 ) {
+			
+			velocity.setZ(-0.8*velocity.getZ());
+		}
+
 	}
 	
 	
