@@ -26,7 +26,7 @@ public class Render extends JPanel implements Runnable{
 	boolean running = false;
 	
 	double tempsTotalEcoule = 0;
-	private double deltaT = 0.017;
+	private double deltaT = 0.09;
 	
 	Cube c;
 	
@@ -44,7 +44,7 @@ public class Render extends JPanel implements Runnable{
 				 	
 		
 		
-		c = new Cube();
+		c = new Cube(0,0,2000);
 		
 		
 		processusAnim = new Thread(this);
@@ -54,11 +54,29 @@ public class Render extends JPanel implements Runnable{
 
 	@Override
 	public void run() {
+		int i = 0;
+		int st = 0;
 		while (true) {
 			
 			
 			
-			if (running)calculerUneIterationPhysique(deltaT);
+			if (running) {
+				//i++;
+				c.setxDegrees(i);
+				c.setyDegrees(i);
+				c.setzDegrees(i);
+				calculerUneIterationPhysique(deltaT);
+			}
+			
+			if(c.getPosZ() <= -2610f ) {
+				
+				if (st - c.getPosZ()  == 0) {
+					running = false;
+				}
+				st = c.getPosZ();
+				
+				
+			}
 			
 			
 			repaint();
@@ -75,12 +93,12 @@ public class Render extends JPanel implements Runnable{
 	}
 	
 	public void paintComponent(Graphics g) {
+		
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
 		g2d.setColor(Color.green);
 		c.render(g2d);
-		
 		
 	}
 	
@@ -91,6 +109,8 @@ public class Render extends JPanel implements Runnable{
 
 		System.out.println("\nTemps total simulé écoulé: "  + String.format("%.3f",tempsTotalEcoule) + "sec (en temps simulé!)");
 	}
+	
+	
 	
 	public static int meterToPixel(double d) {
 		double met = d/100;

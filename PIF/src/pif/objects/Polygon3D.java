@@ -1,6 +1,5 @@
 package pif.objects;
 
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
@@ -11,12 +10,8 @@ import pif.points.Point3D;
 
 public class Polygon3D {
 	
-	
-	
-	Matrix mat;
-	
-	
 	Point3D[] pts;
+	
 	
 	public Polygon3D (Point3D...pts) {
 		

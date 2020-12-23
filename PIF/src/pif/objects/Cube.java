@@ -1,11 +1,6 @@
 package pif.objects;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 
 import pif.physics.Vector3D;
 import pif.physics.physicsEngine;
@@ -91,6 +86,9 @@ public class Cube {
 		velocity = new Vector3D();
 		acceleration = new Vector3D();
 		
+		gravityF = physicsEngine.calculForceGrav(mass);
+		frictionF = new Vector3D();
+		
 		polygons[0] = new Polygon3D(newPoints[0], newPoints[1], newPoints[2], newPoints[3]);
 		polygons[1] = new Polygon3D(newPoints[1], newPoints[2], newPoints[6], newPoints[5]);
 		polygons[2] = new Polygon3D(newPoints[4], newPoints[5], newPoints[6], newPoints[7]);
@@ -105,7 +103,9 @@ public class Cube {
 		
 	
 		
+		mass = 50;
 		points = new Point3D[pos.length];
+		polygons = new Polygon3D[6];
 		
 		newPoints = new Point3D[pos.length];
 		
@@ -125,8 +125,6 @@ public class Cube {
 		}
 		
 		
-		
-		
 		xDegrees = 0;
 		yDegrees = 0;
 		zDegrees = 0;
@@ -134,6 +132,20 @@ public class Cube {
 		posX = dx;
 		posY = dy;
 		posZ = dz;
+		 
+		position = new Vector3D(posX/100,posY/100,posZ/100);
+		velocity = new Vector3D();
+		acceleration = new Vector3D();
+		
+		gravityF = physicsEngine.calculForceGrav(mass);
+		frictionF = new Vector3D();
+		
+		polygons[0] = new Polygon3D(newPoints[0], newPoints[1], newPoints[2], newPoints[3]);
+		polygons[1] = new Polygon3D(newPoints[1], newPoints[2], newPoints[6], newPoints[5]);
+		polygons[2] = new Polygon3D(newPoints[4], newPoints[5], newPoints[6], newPoints[7]);
+		polygons[3] = new Polygon3D(newPoints[0], newPoints[3], newPoints[7], newPoints[4]);
+		polygons[4] = new Polygon3D(newPoints[0], newPoints[1], newPoints[5], newPoints[4]);
+		polygons[5] = new Polygon3D(newPoints[2], newPoints[3], newPoints[7], newPoints[6]);
 		 
 		
 		
@@ -162,45 +174,18 @@ public class Cube {
 		 };
 		
 		
-		Point3D[] pt = Matrix.multiplyMat(points, matRotZ);
-		
-		
-		
-		
-		for (int j  = 0 ; j<pt.length; j++) {
-			
-			pt[j].setX(pt[j].getX() * -1);
-			pt[j].setY(pt[j].getY() * -1);
-			pt[j].setZ(pt[j].getZ() * -1);
-			
-		}
-		
-		pt = Matrix.multiplyMat(pt, matRotY);
-		
-
-		
-		for (int j  = 0 ; j<pt.length; j++) {
-			
-			pt[j].setX(pt[j].getX() * -1);
-			pt[j].setY(pt[j].getY() * -1);
-			pt[j].setZ(pt[j].getZ() * -1);
-			
-			
-		}
-		
-		
-		
-		pt = Matrix.multiplyMat(pt, matRotX);
+		newPoints = Matrix.multiplyMat(points, matRotZ);
+		newPoints = Matrix.multiplyMat(newPoints, matRotY);
+		newPoints = Matrix.multiplyMat(newPoints, matRotX);
 		
 		for (int i = 0 ; i < pos.length; i++) {
 			
-			pt[i].setX((int)(pt[i].getX()+dx));
-			pt[i].setY((int)(pt[i].getY()+dy));
-			pt[i].setZ((int)(pt[i].getZ()+dz));
+			newPoints[i].setX((int)(newPoints[i].getX()+dx));
+			newPoints[i].setY((int)(newPoints[i].getY()+dy));
+			newPoints[i].setZ((int)(newPoints[i].getZ()+dz));
 			
 		}
 		
-		newPoints = pt;
 			
 	}
 	
@@ -273,9 +258,6 @@ public class Cube {
 		polygons[5].newPts(newPoints[2], newPoints[3], newPoints[7], newPoints[6]);
 		
 		
-		
-		
-		
 		for (Polygon3D poly : polygons) {
 			
 			poly.render(g2d);
@@ -285,18 +267,18 @@ public class Cube {
 	
 	public void oneStep(double deltaT) {
 		
-		gravityF = physicsEngine.calculForceGrav(mass);
-
+		
+		totalForces = frictionF.add(gravityF);
 
 		try {
-			acceleration = physicsEngine.calculAcceleration(gravityF, mass);
+			acceleration = physicsEngine.calculAcceleration(totalForces, mass);
 		} catch (Exception e) {
 			System.out.println("Erreur calcul accélération (masse nulle)");
 		}
 		velocity = physicsEngine.calculVitesse(deltaT, velocity, acceleration);
 		position = physicsEngine.calculPosition(deltaT, position, velocity);
 		
-		Vector3D.toString(position);
+		
 		
 		
 		posX = (int) position.getX()*100;

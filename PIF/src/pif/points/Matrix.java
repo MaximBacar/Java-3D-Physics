@@ -20,6 +20,7 @@ public class Matrix {
 		return nvxMat;
 	}
 	
+	
 	public static Point3D [] multiplyMat(Point3D[] pts, double[][] mat){
 		int[][] newMat = new int[pts.length][3];
 		Point3D[] newPoints = new Point3D[pts.length];
@@ -42,26 +43,23 @@ public class Matrix {
 	}
 	
 	
-	
-	
-	
 	public static Point2D[] to2d (Point3D[] pts) {
 		
-		Point2D[] p = new Point[pts.length];
+		Point2D[] points = new Point[pts.length];
 		double e = 	6500;
 		
 		
-		for (int i = 0; i<p.length; i++) {
-			p[i] = new Point();
+		for (int i = 0; i<points.length; i++) {
+			points[i] = new Point();
 		}
 		
 		for (int i = 0; i<pts.length; i++) {
 			
-			p[i].setLocation( (-1*e*(pts[i].getY())) / (pts[i].getX()-e), (-1*e*(pts[i].getZ() - 0)) / (pts[i].getX()-e));
+			points[i].setLocation( (-1*e*(pts[i].getY())) / (pts[i].getX()-e), (-1*e*(pts[i].getZ() - 0)) / (pts[i].getX()-e));
 		}
 		
 		
-		return p;
+		return points;
 	}
 
 }

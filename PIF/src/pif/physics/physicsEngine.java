@@ -47,9 +47,9 @@ public class physicsEngine {
 	
 	public static Vector3D calculForceFriction(double mu, double masse, Vector3D vitesse) {
 		if (vitesse.getX() > 0 ) {
-			return new Vector3D(0,-mu*(ACCEL_GRAV*masse),0); //CHANGER
+			return new Vector3D(0,-mu*(ACCEL_GRAV*masse),0); 
 		} else { 
-			return new Vector3D(0,mu*(ACCEL_GRAV*masse),0); //CHANGER
+			return new Vector3D(0,mu*(ACCEL_GRAV*masse),0); 
 		}
 	}
 
