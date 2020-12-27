@@ -26,9 +26,10 @@ public class Render extends JPanel implements Runnable{
 	boolean running = false;
 	
 	double tempsTotalEcoule = 0;
-	private double deltaT = 0.09;
+	private double deltaT = 0.01;
 	
 	Cube c;
+	Cube c2;
 	
 	
 	public Render () {
@@ -45,6 +46,7 @@ public class Render extends JPanel implements Runnable{
 		
 		
 		c = new Cube(0,0,2000);
+		c2 = new Cube();
 		
 		
 		processusAnim = new Thread(this);
@@ -54,14 +56,14 @@ public class Render extends JPanel implements Runnable{
 
 	@Override
 	public void run() {
-		int i = 0;
+		float i = 0;
 		int st = 0;
 		while (true) {
 			
 			
 			
 			if (running) {
-				//i++;
+				//i+=1;
 				c.setxDegrees(i);
 				c.setyDegrees(i);
 				c.setzDegrees(i);
@@ -97,8 +99,9 @@ public class Render extends JPanel implements Runnable{
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
-		g2d.setColor(Color.green);
+		g2d.setColor(Color.gray);
 		c.render(g2d);
+		//c2.render(g2d);
 		
 	}
 	

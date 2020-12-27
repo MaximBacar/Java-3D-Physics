@@ -33,7 +33,7 @@ public class Application extends JFrame{
 					
 					
 					Application frame = new Application();
-					frame.getContentPane().setBackground(Color.black);
+					frame.getContentPane().setBackground(Color.white);
 					frame.setVisible(true);
 					
 					

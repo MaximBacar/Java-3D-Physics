@@ -270,7 +270,7 @@ public class Cube {
 		
 		totalForces = frictionF.add(gravityF);
 		
-		Vector3D.toString(frictionF);
+		//Vector3D.toString(frictionF);
 
 		try {
 			acceleration = physicsEngine.calculAcceleration(totalForces, mass);
@@ -283,10 +283,12 @@ public class Cube {
 		
 		
 		
-		posX = (int) position.getX()*100;
-		posY = (int) position.getY()*100;
-		posZ = (int) position.getZ()*100;
+		posX = (int) ( position.getX()*100.00f);
+		posY = (int) (position.getY()*100.00f);
+		posZ = (int) (position.getZ()*100.00f);
 		
+		Vector3D.toString(position);
+		System.out.println(posX +" , "+posY+" , "+posZ);
 		
 		if(posZ <= -2600 ) {
 			
@@ -300,6 +302,12 @@ public class Cube {
 
 	}
 	
+	
+	public Polygon3D[] getPolygon() {
+		
+		return polygons;
+		
+	}
 	
 	
 	
