@@ -30,9 +30,9 @@ public class Cube {
 	
 	Polygon3D[] polygons;
 	
-	private float xDegrees;
-	private float yDegrees;
-	private float zDegrees;
+	private double xDegrees;
+	private double yDegrees;
+	private double zDegrees;
 	
 	private int posX;
 	private int posY;
@@ -95,7 +95,7 @@ public class Cube {
 		posZ = 0;
 		 
 		position = new Vector3D(posX,posY,posZ);
-		velocity = new Vector3D(-10,-3,50);
+		velocity = new Vector3D(-10,-3,0);
 		acceleration = new Vector3D();
 		angularVelocity = new Vector3D();
 		torque = new Vector3D(0,10,0);
@@ -132,30 +132,53 @@ public class Cube {
 		position.setX(posX/100);
 		position.setY(posY/100);
 		position.setZ(posZ/100);
+		velocity = new Vector3D(-10,-9,0);
+		
+		
+	}
+	
+	public Cube(int dx, int dy, int dz, double xdeg, double ydeg, double zdeg) {
+		
+		__init__();
+		posX = dx;
+		posY = dy;
+		posZ = dz;
+		position.setX(posX/100);
+		position.setY(posY/100);
+		position.setZ(posZ/100);
+		velocity = new Vector3D(-10,-9,0);
+		xDegrees = xdeg;
+		yDegrees = ydeg;
+		zDegrees = zdeg;
+		orientation.setX(xDegrees);
+		orientation.setY(yDegrees);
+		orientation.setZ(zDegrees);
+		
+		
 		
 		
 	}
 	
 
 	
-	public void rotateTranslate (float degX, float degY, float degZ, int dx, int dy, int dz) {
+	public void rotateTranslate (double xDegrees2, double yDegrees2, double zDegrees2, int dx, int dy, int dz) {
 		
 		double[][] matRotZ = {
-				 {Math.cos(Math.toRadians(degZ)) , -Math.sin(Math.toRadians(degZ)), 0},
-				 {Math.sin(Math.toRadians(degZ)) , Math.cos(Math.toRadians(degZ)), 0},
+				 {Math.cos(Math.toRadians(zDegrees2)) , -Math.sin(Math.toRadians(zDegrees2)), 0},
+				 {Math.sin(Math.toRadians(zDegrees2)) , Math.cos(Math.toRadians(zDegrees2)), 0},
 				 {0,0,1}
 		 };
 		
 		double[][] matRotY = {
-				 {Math.cos(Math.toRadians(degY)) , 0, Math.sin(Math.toRadians(degY))},
+				 {Math.cos(Math.toRadians(yDegrees2)) , 0, Math.sin(Math.toRadians(yDegrees2))},
 				 {0 , 1, 0},
-				 {-1.0000* Math.sin(Math.toRadians(degY)),0,Math.cos(Math.toRadians(degY))}
+				 {-1.0000* Math.sin(Math.toRadians(yDegrees2)),0,Math.cos(Math.toRadians(yDegrees2))}
 		 };
 		
 		double[][] matRotX = {
 				{1 , 0, 0},
-				{0, Math.cos(Math.toRadians(degX)), -Math.sin(Math.toRadians(degX))}, 
-				{0, Math.sin(Math.toRadians(degX)),Math.cos(Math.toRadians(degX))}
+				{0, Math.cos(Math.toRadians(xDegrees2)), -Math.sin(Math.toRadians(xDegrees2))}, 
+				{0, Math.sin(Math.toRadians(xDegrees2)),Math.cos(Math.toRadians(xDegrees2))}
 		 };
 		
 		
@@ -175,7 +198,7 @@ public class Cube {
 	}
 	
 
-	public float getxDegrees() {
+	public double getxDegrees() {
 		return xDegrees;
 	}
 
@@ -184,7 +207,7 @@ public class Cube {
 		
 	}
 
-	public float getyDegrees() {
+	public double getyDegrees() {
 		return yDegrees;
 	}
 
@@ -193,7 +216,7 @@ public class Cube {
 		
 	}
 
-	public float getzDegrees() {
+	public double getzDegrees() {
 		return zDegrees;
 	}
 
@@ -265,6 +288,10 @@ public class Cube {
 		
 		totalForces = frictionF.add(gravityF);
 		
+		xDegrees = (orientation.getX());
+		yDegrees = (orientation.getY());
+		zDegrees = (orientation.getZ());
+		
 		
 
 		try {
@@ -279,9 +306,7 @@ public class Cube {
 		angularVelocity = physicsEngine.angularVelocity(deltaT, angularVelocity, tAccel);
 		orientation = physicsEngine.orientation(deltaT, orientation, angularVelocity);
 		
-		xDegrees = ((float) orientation.getX());
-		yDegrees = ((float) orientation.getY());
-		zDegrees = ((float) orientation.getZ());
+		
 		
 		
 		
@@ -289,8 +314,7 @@ public class Cube {
 		posY = (int) (position.getY()*100.00f);
 		posZ = (int) (position.getZ()*100.00f);
 		
-		Vector3D.toString(position);
-		System.out.println(posX +" , "+posY+" , "+posZ);
+		
 		
 		if(posZ <= -2600 ) {
 			

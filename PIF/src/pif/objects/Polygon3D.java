@@ -11,6 +11,7 @@ import pif.points.Point3D;
 public class Polygon3D {
 	
 	Point3D[] pts;
+	Polygon poly2d;
 	
 	
 	public Polygon3D (Point3D...pts) {
@@ -29,10 +30,13 @@ public class Polygon3D {
 		for (int i = 0; i < pts.length; i++) {
 			polygon.addPoint(Render.meterToPixel(p[i].x) , Render.meterToPixely(p[i].y));
 			
-			
-			
 		}
-		g2d.draw(polygon);
+		poly2d = polygon;
+		g2d.draw(poly2d);
+	}
+	
+	public Polygon getPolygon2D () {
+		return poly2d;
 	}
 	
 	

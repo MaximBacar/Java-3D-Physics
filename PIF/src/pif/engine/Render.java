@@ -3,6 +3,8 @@ package pif.engine;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.RenderingHints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -13,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
 import pif.objects.Cube;
+import pif.objects.Polygon3D;
+import pif.physics.Collisions;
 
 public class Render extends JPanel implements Runnable {
 	
@@ -63,7 +67,7 @@ public class Render extends JPanel implements Runnable {
 				 	
 		
 		
-		c = new Cube(0,3000,000);
+		c = new Cube(0,3000,000,0,0,45);
 		c2 = new Cube();
 		
 		
@@ -74,13 +78,10 @@ public class Render extends JPanel implements Runnable {
 
 	@Override
 	public void run() {
-		float i = 45;
 		int st = 0;
 		while (true) {
 			
-			//c.setxDegrees(i);
-			c.setyDegrees(i);
-			c.setzDegrees(i);
+			
 			
 			if (running) {
 				
@@ -118,11 +119,23 @@ public class Render extends JPanel implements Runnable {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
-		
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, //Anti-Aliasing
+				RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		g2d.setColor(Color.gray);
 		c.render(g2d);
 		c2.render(g2d);
+		
+		Polygon3D[] poly = c.getPolygon();
+		Polygon3D[] poly2 = c2.getPolygon();
+		
+		
+		g2d.fill(poly[4].getPolygon2D());
+		g2d.fill(poly2[5].getPolygon2D());
+		
+		if (Collisions.polygonPolygon(poly[4].getPolygon2D(), poly2[5].getPolygon2D())) {
+			System.out.println("=================================================");
+		}
 		
 	}
 	
@@ -132,7 +145,7 @@ public class Render extends JPanel implements Runnable {
 		c2.oneStep(deltaT);
 
 
-		System.out.println("\nTemps total simulé écoulé: "  + String.format("%.3f",tempsTotalEcoule) + "sec (en temps simulé!)");
+		//System.out.println("\nTemps total simulé écoulé: "  + String.format("%.3f",tempsTotalEcoule) + "sec (en temps simulé!)");
 	}
 	
 	

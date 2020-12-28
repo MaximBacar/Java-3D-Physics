@@ -16,7 +16,7 @@ public class physicsEngine {
 	}
 	
 	public static Vector3D calculTorqueAcceleration(Vector3D torque, double inertia) throws Exception { 
-		System.out.println(inertia);
+		
 		if(inertia < EPSILON) 
 			throw new Exception("Error: the inertia is null");
 		else
