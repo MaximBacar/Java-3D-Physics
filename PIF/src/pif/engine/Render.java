@@ -37,6 +37,8 @@ public class Render extends JPanel implements Runnable {
 	
 	Cube c;
 	Cube c2;
+	Cube c3;
+	Collider col;
 	
 	
 	public Render () {
@@ -49,27 +51,16 @@ public class Render extends JPanel implements Runnable {
 		});
 		
 		
-		addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				super.keyReleased(e);
-			}
-			
-			public void keyPressed(KeyEvent e) {
-				super.keyPressed(e);
-				int k = e.getKeyCode();
-				System.out.println(k);
-			}
-		});
 			
 				
 				 	
 		
 		
-		c = new Cube(0,3000,000,0,0,45);
+		c = new Cube(0,3000,000,0,0,25);
 		c2 = new Cube();
+		c3 = new Cube(0,-2000,0);
 		
+		col = new Collider(c, c2);
 		
 		processusAnim = new Thread(this);
 		processusAnim.start();
@@ -119,23 +110,15 @@ public class Render extends JPanel implements Runnable {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
+		
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, //Anti-Aliasing
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		g2d.setColor(Color.gray);
 		c.render(g2d);
 		c2.render(g2d);
-		
-		Polygon3D[] poly = c.getPolygon();
-		Polygon3D[] poly2 = c2.getPolygon();
-		
-		
-		g2d.fill(poly[4].getPolygon2D());
-		g2d.fill(poly2[5].getPolygon2D());
-		
-		if (Collisions.polygonPolygon(poly[4].getPolygon2D(), poly2[5].getPolygon2D())) {
-			System.out.println("=================================================");
-		}
+		c3.render(g2d);
+		col.update();
 		
 	}
 	

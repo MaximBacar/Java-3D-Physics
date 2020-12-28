@@ -39,6 +39,24 @@ public class Polygon3D {
 		return poly2d;
 	}
 	
+	public Point3D[] getPoints() {
+		return pts;
+	}
+	
+	public Point3D getAveragePoints() {
+		double sumX = 0;
+		double sumY = 0;
+		double sumZ = 0;
+		
+		for (int i = 0; i< pts.length; i++) {
+			sumX = sumX + pts[i].getX();
+			sumY = sumY + pts[i].getY();
+			sumZ = sumZ + pts[i].getZ();
+		}
+		
+		return new Point3D((int)sumX/pts.length, (int)sumY/pts.length, (int)sumZ/pts.length);
+		
+	}
 	
 
 }
