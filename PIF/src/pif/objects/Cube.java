@@ -1,7 +1,11 @@
 package pif.objects;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.geom.Point2D;
 
+import pif.engine.Render;
 import pif.physics.Vector3D;
 import pif.physics.physicsEngine;
 import pif.points.Matrix;
@@ -40,19 +44,27 @@ public class Cube {
 	
 	
 	private double mass;
+	private double inertia;
 	
 	private Vector3D position;
 	private Vector3D velocity;
 	private Vector3D acceleration;
 	
+	private Vector3D angularVelocity;
+	private Vector3D torque;
+	private Vector3D orientation;
+	private Vector3D tAccel;
+	
 	private Vector3D frictionF;
 	private Vector3D gravityF;
 	private Vector3D totalForces;
 	
-	public Cube() {
-		
 	
-		mass = 50;
+	private void __init__() {
+		
+		mass = 30;
+		inertia = 3;
+		
 		points = new Point3D[pos.length];
 		polygons = new Polygon3D[6];
 		
@@ -85,57 +97,13 @@ public class Cube {
 		position = new Vector3D(posX,posY,posZ);
 		velocity = new Vector3D();
 		acceleration = new Vector3D();
-		
-		gravityF = physicsEngine.calculForceGrav(mass);
-		frictionF = new Vector3D(0,0,10000);
-		
-		polygons[0] = new Polygon3D(newPoints[0], newPoints[1], newPoints[2], newPoints[3]);
-		polygons[1] = new Polygon3D(newPoints[1], newPoints[2], newPoints[6], newPoints[5]);
-		polygons[2] = new Polygon3D(newPoints[4], newPoints[5], newPoints[6], newPoints[7]);
-		polygons[3] = new Polygon3D(newPoints[0], newPoints[3], newPoints[7], newPoints[4]);
-		polygons[4] = new Polygon3D(newPoints[0], newPoints[1], newPoints[5], newPoints[4]);
-		polygons[5] = new Polygon3D(newPoints[2], newPoints[3], newPoints[7], newPoints[6]);
+		angularVelocity = new Vector3D();
+		torque = new Vector3D(0,1,0);
+		orientation = new Vector3D();
+		tAccel = new Vector3D();
 		
 		
-	}
-	
-	public Cube(int dx, int dy, int dz) {
 		
-	
-		
-		mass = 50;
-		points = new Point3D[pos.length];
-		polygons = new Polygon3D[6];
-		
-		newPoints = new Point3D[pos.length];
-		
-		for (int i = 0; i<pos.length; i++) {
-			points[i] = new Point3D();
-			points[i].setX(pos[i][0]);
-			points[i].setY(pos[i][1]);
-			points[i].setZ(pos[i][2]);
-		}
-		
-		
-		for (int i = 0; i<pos.length; i++) {
-			newPoints[i] = new Point3D();
-			newPoints[i].setX(points[i].getX());
-			newPoints[i].setY(points[i].getY());
-			newPoints[i].setZ(points[i].getZ());
-		}
-		
-		
-		xDegrees = 0;
-		yDegrees = 0;
-		zDegrees = 0;
-		
-		posX = dx;
-		posY = dy;
-		posZ = dz;
-		 
-		position = new Vector3D(posX/100,posY/100,posZ/100);
-		velocity = new Vector3D();
-		acceleration = new Vector3D();
 		
 		gravityF = physicsEngine.calculForceGrav(mass);
 		frictionF = new Vector3D();
@@ -146,7 +114,24 @@ public class Cube {
 		polygons[3] = new Polygon3D(newPoints[0], newPoints[3], newPoints[7], newPoints[4]);
 		polygons[4] = new Polygon3D(newPoints[0], newPoints[1], newPoints[5], newPoints[4]);
 		polygons[5] = new Polygon3D(newPoints[2], newPoints[3], newPoints[7], newPoints[6]);
-		 
+		
+	}
+	
+	public Cube() {
+		
+		__init__();
+		
+	}
+	
+	public Cube(int dx, int dy, int dz) {
+	
+		__init__();
+		posX = dx;
+		posY = dy;
+		posZ = dz;
+		position.setX(posX/100);
+		position.setY(posY/100);
+		position.setZ(posZ/100);
 		
 		
 	}
@@ -195,7 +180,7 @@ public class Cube {
 	}
 
 	public void setxDegrees(float xDegrees) {
-		this.xDegrees = xDegrees;
+		orientation.setX(this.xDegrees);
 		
 	}
 
@@ -204,7 +189,7 @@ public class Cube {
 	}
 
 	public void setyDegrees(float yDegrees) {
-		this.yDegrees = yDegrees;
+		orientation.setY(this.yDegrees);
 		
 	}
 
@@ -213,7 +198,8 @@ public class Cube {
 	}
 
 	public void setzDegrees(float zDegrees) {
-		this.zDegrees = zDegrees;
+		
+		orientation.setZ(this.zDegrees);
 		
 	}
 
@@ -262,6 +248,13 @@ public class Cube {
 			
 			poly.render(g2d);
 		}
+		
+		g2d.setColor(Color.red);
+		
+		Point2D[] p2d = Matrix.to2d(newPoints);
+		for (Point2D p : p2d) {
+			g2d.fillRect(Render.meterToPixel(p.getX())-2, Render.meterToPixely(p.getY())-2, 4, 4);
+		}
 	}
 	
 	
@@ -270,16 +263,23 @@ public class Cube {
 		
 		totalForces = frictionF.add(gravityF);
 		
-		//Vector3D.toString(frictionF);
+		
 
 		try {
 			acceleration = physicsEngine.calculAcceleration(totalForces, mass);
+			tAccel = physicsEngine.calculTorqueAcceleration(torque, inertia);
 		} catch (Exception e) {
 			System.out.println("Erreur calcul accélération (masse nulle)");
 		}
 		velocity = physicsEngine.calculVitesse(deltaT, velocity, acceleration);
 		position = physicsEngine.calculPosition(deltaT, position, velocity);
 		
+		angularVelocity = physicsEngine.angularVelocity(deltaT, angularVelocity, tAccel);
+		orientation = physicsEngine.orientation(deltaT, orientation, angularVelocity);
+		
+		xDegrees = ((float) orientation.getX());
+		yDegrees = ((float) orientation.getY());
+		zDegrees = ((float) orientation.getZ());
 		
 		
 		

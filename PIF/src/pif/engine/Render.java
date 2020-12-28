@@ -45,7 +45,7 @@ public class Render extends JPanel implements Runnable{
 				 	
 		
 		
-		c = new Cube(0,0,2000);
+		c = new Cube(0,3000,000);
 		c2 = new Cube();
 		
 		
@@ -56,17 +56,18 @@ public class Render extends JPanel implements Runnable{
 
 	@Override
 	public void run() {
-		float i = 0;
+		float i = 45;
 		int st = 0;
 		while (true) {
 			
-			
+			//c.setxDegrees(i);
+			c.setyDegrees(i);
+			c.setzDegrees(i);
 			
 			if (running) {
-				//i+=1;
-				c.setxDegrees(i);
-				c.setyDegrees(i);
-				c.setzDegrees(i);
+				
+				
+				
 				calculerUneIterationPhysique(deltaT);
 			}
 			
@@ -101,13 +102,14 @@ public class Render extends JPanel implements Runnable{
 		
 		g2d.setColor(Color.gray);
 		c.render(g2d);
-		//c2.render(g2d);
+		c2.render(g2d);
 		
 	}
 	
 	public void calculerUneIterationPhysique(double deltaT) {
 		tempsTotalEcoule += deltaT;
 		c.oneStep(deltaT);
+		c2.oneStep(deltaT);
 
 
 		System.out.println("\nTemps total simulé écoulé: "  + String.format("%.3f",tempsTotalEcoule) + "sec (en temps simulé!)");

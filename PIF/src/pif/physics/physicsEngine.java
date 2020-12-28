@@ -14,12 +14,38 @@ public class physicsEngine {
 		else
 			return new Vector3D( sommeDesForces.getX()/masse , sommeDesForces.getY()/masse , sommeDesForces.getZ()/masse );	
 	}
+	
+	public static Vector3D calculTorqueAcceleration(Vector3D torque, double inertia) throws Exception { 
+		System.out.println(inertia);
+		if(inertia < EPSILON) 
+			throw new Exception("Error: the inertia is null");
+		else
+			return new Vector3D( torque.getX()/inertia , torque.getY()/inertia , torque.getZ()/inertia );	
+	}
 
 	
 	public static Vector3D calculVitesse(double deltaT, Vector3D vitesse, Vector3D accel) {
 		Vector3D deltaVitesse = Vector3D.scalarMultiplication(accel, deltaT);
 		Vector3D resultVit = vitesse.add( deltaVitesse );
 		return new Vector3D(resultVit.getX(), resultVit.getY(), resultVit.getZ());
+		
+	}
+	
+	public static Vector3D angularVelocity (double deltaT, Vector3D angularVelocity, Vector3D accel){
+			
+		
+		Vector3D deltaVelocity = Vector3D.scalarMultiplication(accel, deltaT);
+		Vector3D result = angularVelocity.add(deltaVelocity);
+		return new Vector3D(result.getX(), result.getY(), result.getZ());
+		
+		
+	}
+	
+	public static Vector3D orientation (double deltaT, Vector3D orientation, Vector3D angualrVelocity) {
+		
+		Vector3D deltaOrientation = Vector3D.scalarMultiplication(angualrVelocity, deltaT);
+		Vector3D resultOr = orientation.add(deltaOrientation); 
+		return new Vector3D(resultOr.getX(), resultOr.getY(), resultOr.getZ());
 		
 	}
 	
