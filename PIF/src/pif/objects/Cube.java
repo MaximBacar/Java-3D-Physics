@@ -62,7 +62,7 @@ public class Cube {
 	
 	private void __init__() {
 		
-		mass = 30;
+		mass = 600;
 		inertia = 3;
 		
 		points = new Point3D[pos.length];
@@ -95,10 +95,10 @@ public class Cube {
 		posZ = 0;
 		 
 		position = new Vector3D(posX,posY,posZ);
-		velocity = new Vector3D(-10,-3,0);
+		velocity = new Vector3D(0,0,0);
 		acceleration = new Vector3D();
 		angularVelocity = new Vector3D();
-		torque = new Vector3D(0,10,0);
+		torque = new Vector3D(0,0,0);
 		orientation = new Vector3D();
 		tAccel = new Vector3D();
 		
@@ -132,7 +132,7 @@ public class Cube {
 		position.setX(posX/100);
 		position.setY(posY/100);
 		position.setZ(posZ/100);
-		velocity = new Vector3D(-10,-9,0);
+		
 		
 		
 	}
@@ -146,7 +146,8 @@ public class Cube {
 		position.setX(posX/100);
 		position.setY(posY/100);
 		position.setZ(posZ/100);
-		velocity = new Vector3D(-10,-9,0);
+		velocity.setY(-30);
+		
 		xDegrees = xdeg;
 		yDegrees = ydeg;
 		zDegrees = zdeg;
@@ -203,7 +204,9 @@ public class Cube {
 	}
 
 	public void setxDegrees(float xDegrees) {
+		this.xDegrees = xDegrees;
 		orientation.setX(this.xDegrees);
+		
 		
 	}
 
@@ -267,12 +270,13 @@ public class Cube {
 		polygons[5].newPts(newPoints[2], newPoints[3], newPoints[7], newPoints[6]);
 		
 		
+		g2d.setColor(Color.gray);
 		for (Polygon3D poly : polygons) {
 			
 			poly.render(g2d);
 		}
 		
-		g2d.setColor(Color.red);
+		g2d.setColor(Color.green);
 		
 		Point2D[] p2d = Matrix.to2d(newPoints);
 		for (Point2D p : p2d) {
@@ -315,10 +319,10 @@ public class Cube {
 		posZ = (int) (position.getZ()*100.00f);
 		
 		
-		
 		if(posZ <= -2600 ) {
 			
 			velocity.setZ(-0.8*velocity.getZ());
+			
 		}
 		
 		if(posZ <= -2610 ) {
@@ -332,6 +336,18 @@ public class Cube {
 	public Polygon3D[] getPolygon() {
 		
 		return polygons;
+		
+	}
+	
+	public void changeDir() {
+		velocity.setY(velocity.getY()*-1);
+	}
+	
+	public void setTorque(double x, double y, double z) {
+		
+		torque.setX(x);
+		torque.setY(y);
+		torque.setZ(z);
 		
 	}
 	

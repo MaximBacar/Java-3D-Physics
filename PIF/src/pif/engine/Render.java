@@ -56,11 +56,13 @@ public class Render extends JPanel implements Runnable {
 				 	
 		
 		
-		c = new Cube(0,3000,000,0,0,25);
+		c = new Cube(3000,2000,000,0,0,25);
 		c2 = new Cube();
-		c3 = new Cube(0,-2000,0);
+		c3 = new Cube(0,5000,0);
 		
-		col = new Collider(c, c2);
+		c2.setxDegrees(45);
+		
+		col = new Collider(c,c2, c3);
 		
 		processusAnim = new Thread(this);
 		processusAnim.start();
@@ -79,15 +81,6 @@ public class Render extends JPanel implements Runnable {
 				
 				
 				calculerUneIterationPhysique(deltaT);
-			}
-			
-			if(c.getPosZ() <= -2610f ) {
-				
-				if (st - c.getPosZ()  == 0) {
-					running = false;
-				}
-				st = c.getPosZ();
-				
 				
 			}
 			
@@ -105,8 +98,9 @@ public class Render extends JPanel implements Runnable {
 		
 	}
 	
+	int i = 0;
 	public void paintComponent(Graphics g) {
-		
+		i+=0;
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -114,10 +108,14 @@ public class Render extends JPanel implements Runnable {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, //Anti-Aliasing
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		
+		g2d.rotate(Math.toRadians(i), meterToPixel(c2.getPosY()), meterToPixely(c2.getPosZ()));
 		g2d.setColor(Color.gray);
 		c.render(g2d);
 		c2.render(g2d);
 		c3.render(g2d);
+		
+		g2d.rotate(-Math.toRadians(i), meterToPixel(c2.getPosY()), meterToPixely(c2.getPosZ()));
+		
 		col.update();
 		
 	}
@@ -126,6 +124,7 @@ public class Render extends JPanel implements Runnable {
 		tempsTotalEcoule += deltaT;
 		c.oneStep(deltaT);
 		c2.oneStep(deltaT);
+		c3.oneStep(deltaT);
 
 
 		//System.out.println("\nTemps total simulé écoulé: "  + String.format("%.3f",tempsTotalEcoule) + "sec (en temps simulé!)");

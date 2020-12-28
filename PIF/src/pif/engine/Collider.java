@@ -87,10 +87,17 @@ public class Collider {
 	}
 	
 	public void update() {
-		Polygon p1 = cubes[nearCubes()[0]].getPolygon()[nearPolygons(nearCubes())[0]].getPolygon2D();
-		Polygon p2 = cubes[nearCubes()[1]].getPolygon()[nearPolygons(nearCubes())[1]].getPolygon2D();
+		if (cubes.length>1) {
+			Polygon p1 = cubes[nearCubes()[0]].getPolygon()[nearPolygons(nearCubes())[0]].getPolygon2D();
+			Polygon p2 = cubes[nearCubes()[1]].getPolygon()[nearPolygons(nearCubes())[1]].getPolygon2D();
+			
+			if (Collisions.polygonPolygon(p1, p2) == true) {
+				System.out.println("============================");
+				cubes[nearCubes()[0]].changeDir();
+				cubes[nearCubes()[1]].changeDir();
+			}
+		}
 		
-		if (Collisions.polygonPolygon(p1, p2) == true)  System.out.println("============================");
 	}
 
 }
