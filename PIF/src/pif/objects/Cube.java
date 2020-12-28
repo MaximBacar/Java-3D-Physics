@@ -95,10 +95,10 @@ public class Cube {
 		posZ = 0;
 		 
 		position = new Vector3D(posX,posY,posZ);
-		velocity = new Vector3D();
+		velocity = new Vector3D(-10,-3,50);
 		acceleration = new Vector3D();
 		angularVelocity = new Vector3D();
-		torque = new Vector3D(0,1,0);
+		torque = new Vector3D(0,10,0);
 		orientation = new Vector3D();
 		tAccel = new Vector3D();
 		
@@ -255,6 +255,8 @@ public class Cube {
 		for (Point2D p : p2d) {
 			g2d.fillRect(Render.meterToPixel(p.getX())-2, Render.meterToPixely(p.getY())-2, 4, 4);
 		}
+		
+		
 	}
 	
 	

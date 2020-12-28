@@ -35,7 +35,9 @@ public class Application extends JFrame{
 					Application frame = new Application();
 					frame.getContentPane().setBackground(Color.white);
 					frame.setVisible(true);
-					
+					frame.setFocusable(true);
+					frame.setAutoRequestFocus(true);
+					frame.setCursor(HAND_CURSOR);
 					
 					//frame.setResizable(false);
 					

@@ -3,6 +3,9 @@ package pif.engine;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
@@ -11,7 +14,7 @@ import javax.swing.event.MouseInputAdapter;
 
 import pif.objects.Cube;
 
-public class Render extends JPanel implements Runnable{
+public class Render extends JPanel implements Runnable {
 	
 	/**
 	 * 
@@ -38,6 +41,21 @@ public class Render extends JPanel implements Runnable{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				running = (running) ? false : true;
+			}
+		});
+		
+		
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				super.keyReleased(e);
+			}
+			
+			public void keyPressed(KeyEvent e) {
+				super.keyPressed(e);
+				int k = e.getKeyCode();
+				System.out.println(k);
 			}
 		});
 			
@@ -99,6 +117,8 @@ public class Render extends JPanel implements Runnable{
 		
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		
+		
 		
 		g2d.setColor(Color.gray);
 		c.render(g2d);
