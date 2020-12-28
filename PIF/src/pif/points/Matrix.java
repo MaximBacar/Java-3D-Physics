@@ -2,19 +2,20 @@ package pif.points;
 
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.util.Arrays;
 
 public class Matrix {
 	
 	
 	
-	public static int [][] multiplyMat(int[][] pts, double[][] mat){
-		int[][] nvxMat = new int[pts.length][3];
+	public static double [][] multiplyMat(double[][] pts, double[][] mat){
+		double[][] nvxMat = new double[pts.length][3];
 		
 		for (int i = 0; i<pts.length; i++) {
-			nvxMat[i][0] = (int) (mat[0][0] * pts[i][0] + mat[0][1]*pts[i][1] + mat[0][2]*pts[i][2]);
-			nvxMat[i][1] = (int) (mat[1][0] * pts[i][0] + mat[1][1]*pts[i][1] + mat[1][2]*pts[i][2]);
-			nvxMat[i][2] = (int) (mat[2][0] * pts[i][0] + mat[2][1]*pts[i][1] + mat[2][2]*pts[i][2]);
+			nvxMat[i][0] = (mat[0][0] * pts[i][0] + mat[0][1]*pts[i][1] + mat[0][2]*pts[i][2]);
+			nvxMat[i][1] = (mat[1][0] * pts[i][0] + mat[1][1]*pts[i][1] + mat[1][2]*pts[i][2]);
+			nvxMat[i][2] = (mat[2][0] * pts[i][0] + mat[2][1]*pts[i][1] + mat[2][2]*pts[i][2]);
 		}
 		
 		return nvxMat;
@@ -22,14 +23,14 @@ public class Matrix {
 	
 	
 	public static Point3D [] multiplyMat(Point3D[] pts, double[][] mat){
-		int[][] newMat = new int[pts.length][3];
+		double[][] newMat = new double[pts.length][3];
 		Point3D[] newPoints = new Point3D[pts.length];
 		
 		for (int i = 0; i<pts.length; i++) {
 			newPoints[i] = new Point3D();
-			newMat[i][0] = (int) (mat[0][0] * pts[i].getX() + mat[0][1]*pts[i].getY() + mat[0][2]*pts[i].getZ());
-			newMat[i][1] = (int) (mat[1][0] * pts[i].getX() + mat[1][1]*pts[i].getY() + mat[1][2]*pts[i].getZ());
-			newMat[i][2] = (int) (mat[2][0] * pts[i].getX() + mat[2][1]*pts[i].getY() + mat[2][2]*pts[i].getZ());
+			newMat[i][0] = (mat[0][0] * pts[i].getX() + mat[0][1]*pts[i].getY() + mat[0][2]*pts[i].getZ());
+			newMat[i][1] = (mat[1][0] * pts[i].getX() + mat[1][1]*pts[i].getY() + mat[1][2]*pts[i].getZ());
+			newMat[i][2] = (mat[2][0] * pts[i].getX() + mat[2][1]*pts[i].getY() + mat[2][2]*pts[i].getZ());
 		}
 		
 		for (int i = 0; i<pts.length; i++) {
@@ -43,23 +44,38 @@ public class Matrix {
 	}
 	
 	
-	public static Point2D[] to2d (Point3D[] pts) {
+	public static Point2D.Double[] to2d (Point3D[] pts) {
 		
-		Point2D[] points = new Point[pts.length];
-		double e = 	6500;
+		Point2D.Double[] points = new Point2D.Double[pts.length];
+		double e = 	50.00000;
 		
 		
 		for (int i = 0; i<points.length; i++) {
-			points[i] = new Point();
+			points[i] = new Point2D.Double();
 		}
 		
 		for (int i = 0; i<pts.length; i++) {
 			
-			points[i].setLocation( (-1*e*(pts[i].getY())) / (pts[i].getX()-e), (-1*e*(pts[i].getZ() - 0)) / (pts[i].getX()-e));
+			points[i].setLocation( (-1.00000f*e*(pts[i].getY())) / (pts[i].getX()-e), (-1.00*e*(pts[i].getZ())) / (pts[i].getX()-e));
 		}
 		
 		
 		return points;
+	}
+	
+	public static void toString(Point3D[] m) {
+		String mm = "";
+		
+		for (int i = 0; i < m.length; i++) {
+			mm = mm + "["+m[i].getX()+" ";
+			mm = mm + m[i].getY()+ " ";
+			mm = mm + m[i].getZ()+ "]";
+			mm = mm + "\n";
+		}
+		
+		System.out.println(mm);
+		
+		
 	}
 
 }

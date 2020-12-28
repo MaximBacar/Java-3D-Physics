@@ -17,14 +17,14 @@ public class Cube {
 	final int [][] pos = {
 			
 //				x	 y	  z
-			 {-500,-500 ,-500},
-			 {500,-500,-500},
-			 {500,500,-500},
-			 {-500,500,-500},
-			 {-500,-500,500},
-			 {500,-500,500},
-			 {500,500,500},
-			 {-500,500,500},
+			 {-5,-5 ,-5},
+			 {5,-5,-5},
+			 {5,5,-5},
+			 {-5,5,-5},
+			 {-5,-5,5},
+			 {5,-5,5},
+			 {5,5,5},
+			 {-5,5,5},
 
 	};
 	
@@ -34,9 +34,9 @@ public class Cube {
 	private double yDegrees;
 	private double zDegrees;
 	
-	private int posX;
-	private int posY;
-	private int posZ;
+	private double posX;
+	private double posY;
+	private double posZ;
 	
 	
 	private Point3D[] points;
@@ -129,24 +129,24 @@ public class Cube {
 		posX = dx;
 		posY = dy;
 		posZ = dz;
-		position.setX(posX/100);
-		position.setY(posY/100);
-		position.setZ(posZ/100);
+		position.setX(posX);
+		position.setY(posY);
+		position.setZ(posZ);
 		
 		
 		
 	}
 	
-	public Cube(int dx, int dy, int dz, double xdeg, double ydeg, double zdeg) {
+	public Cube(double dx, double dy, double dz, double xdeg, double ydeg, double zdeg) {
 		
 		__init__();
 		posX = dx;
 		posY = dy;
 		posZ = dz;
-		position.setX(posX/100);
-		position.setY(posY/100);
-		position.setZ(posZ/100);
-		velocity.setY(-30);
+		position.setX(posX);
+		position.setY(posY);
+		position.setZ(posZ);
+		
 		
 		xDegrees = xdeg;
 		yDegrees = ydeg;
@@ -162,7 +162,7 @@ public class Cube {
 	
 
 	
-	public void rotateTranslate (double xDegrees2, double yDegrees2, double zDegrees2, int dx, int dy, int dz) {
+	public void rotateTranslate (double xDegrees2, double yDegrees2, double zDegrees2, double dx, double dy, double dz) {
 		
 		double[][] matRotZ = {
 				 {Math.cos(Math.toRadians(zDegrees2)) , -Math.sin(Math.toRadians(zDegrees2)), 0},
@@ -183,17 +183,22 @@ public class Cube {
 		 };
 		
 		
+		
 		newPoints = Matrix.multiplyMat(points, matRotZ);
 		newPoints = Matrix.multiplyMat(newPoints, matRotY);
 		newPoints = Matrix.multiplyMat(newPoints, matRotX);
 		
 		for (int i = 0 ; i < pos.length; i++) {
 			
-			newPoints[i].setX((int)(newPoints[i].getX()+dx));
-			newPoints[i].setY((int)(newPoints[i].getY()+dy));
-			newPoints[i].setZ((int)(newPoints[i].getZ()+dz));
+			newPoints[i].setX((newPoints[i].getX()+dx));
+			newPoints[i].setY((newPoints[i].getY()+dy));
+			newPoints[i].setZ((newPoints[i].getZ()+dz));
 			
 		}
+		
+		Matrix.toString(newPoints);
+		
+		System.out.println(Render.meterToPixel(posY) + " " + Render.meterToPixely(posZ));
 		
 			
 	}
@@ -229,34 +234,33 @@ public class Cube {
 		
 	}
 
-	public int getPosX() {
+	public double getPosX() {
 		return posX;
 	}
 
-	public void setPosX(int posX) {
+	public void setPosX(double posX) {
 		this.posX = posX;
 		
 	}
 
-	public int getPosY() {
+	public double getPosY() {
 		return posY;
 	}
 
-	public void setPosY(int posY) {
+	public void setPosY(double posY) {
 		this.posY = posY;
 		
 	}
 
-	public int getPosZ() {
+	public double getPosZ() {
 		return posZ;
 	}
 
-	public void setPosZ(int posZ) {
+	public void setPosZ(double posZ) {
 		this.posZ = posZ;
 		
 	}
 
-	
 	
 	public void render(Graphics2D g2d) {
 		rotateTranslate(xDegrees, yDegrees, zDegrees, posX, posY, posZ);
@@ -268,6 +272,7 @@ public class Cube {
 		polygons[3].newPts(newPoints[0], newPoints[3], newPoints[7], newPoints[4]);
 		polygons[4].newPts(newPoints[0], newPoints[1], newPoints[5], newPoints[4]);
 		polygons[5].newPts(newPoints[2], newPoints[3], newPoints[7], newPoints[6]);
+		
 		
 		
 		g2d.setColor(Color.gray);
@@ -282,6 +287,11 @@ public class Cube {
 		for (Point2D p : p2d) {
 			g2d.fillRect(Render.meterToPixel(p.getX())-2, Render.meterToPixely(p.getY())-2, 4, 4);
 		}
+		
+		
+		g2d.fillOval(Render.meterToPixel(posY)-2, Render.meterToPixely(posZ)-2, 4, 4);
+		
+		
 		
 		
 	}
@@ -314,21 +324,23 @@ public class Cube {
 		
 		
 		
-		posX = (int) ( position.getX()*100.00f);
-		posY = (int) (position.getY()*100.00f);
-		posZ = (int) (position.getZ()*100.00f);
+		posX = ( position.getX());
+		posY = (position.getY());
+		posZ = (position.getZ());
 		
 		
-		if(posZ <= -2600 ) {
+		
+		
+		if(posZ <= -30 ) {
 			
-			velocity.setZ(-0.8*velocity.getZ());
+			velocity.setZ(-0.5*velocity.getZ());
 			
 		}
 		
-		if(posZ <= -2610 ) {
-			
-			posZ = -2610;
-		}
+//		if(posZ <= -50 ) {
+//			
+//			posZ = -50;
+//		}
 
 	}
 	
@@ -340,7 +352,7 @@ public class Cube {
 	}
 	
 	public void changeDir() {
-		velocity.setY(velocity.getY()*-1);
+		//velocity.setZ(velocity.getZ()*-0.5);
 	}
 	
 	public void setTorque(double x, double y, double z) {

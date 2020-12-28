@@ -25,7 +25,7 @@ public class Render extends JPanel implements Runnable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static int HEIGHT = 800;
+	private static int HEIGHT = 1000;
 	private static int WIDTH = 1000;
 	
 	private Thread processusAnim;
@@ -49,20 +49,16 @@ public class Render extends JPanel implements Runnable {
 				running = (running) ? false : true;
 			}
 		});
+	
 		
 		
-			
-				
-				 	
-		
-		
-		c = new Cube(3000,2000,000,0,0,25);
+		c = new Cube(0,10,0,0,0,0);
 		c2 = new Cube();
-		c3 = new Cube(0,5000,0);
+		//c3 = new Cube(0,50,0);
 		
-		c2.setxDegrees(45);
 		
-		col = new Collider(c,c2, c3);
+		
+		col = new Collider(c,c2);
 		
 		processusAnim = new Thread(this);
 		processusAnim.start();
@@ -71,11 +67,7 @@ public class Render extends JPanel implements Runnable {
 
 	@Override
 	public void run() {
-		int st = 0;
 		while (true) {
-			
-			
-			
 			if (running) {
 				
 				
@@ -98,9 +90,9 @@ public class Render extends JPanel implements Runnable {
 		
 	}
 	
-	int i = 0;
+	
 	public void paintComponent(Graphics g) {
-		i+=0;
+		
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -108,13 +100,12 @@ public class Render extends JPanel implements Runnable {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, //Anti-Aliasing
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		g2d.rotate(Math.toRadians(i), meterToPixel(c2.getPosY()), meterToPixely(c2.getPosZ()));
+		
 		g2d.setColor(Color.gray);
 		c.render(g2d);
 		c2.render(g2d);
-		c3.render(g2d);
+		//c3.render(g2d);
 		
-		g2d.rotate(-Math.toRadians(i), meterToPixel(c2.getPosY()), meterToPixely(c2.getPosZ()));
 		
 		col.update();
 		
@@ -124,7 +115,7 @@ public class Render extends JPanel implements Runnable {
 		tempsTotalEcoule += deltaT;
 		c.oneStep(deltaT);
 		c2.oneStep(deltaT);
-		c3.oneStep(deltaT);
+		//c3.oneStep(deltaT);
 
 
 		//System.out.println("\nTemps total simulé écoulé: "  + String.format("%.3f",tempsTotalEcoule) + "sec (en temps simulé!)");
@@ -133,12 +124,12 @@ public class Render extends JPanel implements Runnable {
 	
 	
 	public static int meterToPixel(double d) {
-		double met = d/100;
+		double met = d;
 		
 		return (int) ((met + WIDTH/20)*10)-5;
 	}
 	public static int meterToPixely(double d) {
-		double met = -d/100;
+		double met = -d;
 		
 		return (int) ((met + HEIGHT/20)*10)-5;
 	}

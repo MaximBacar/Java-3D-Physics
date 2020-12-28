@@ -53,7 +53,7 @@ public class Application extends JFrame{
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(1920/2 - 250, 1080/2 - 350, 1000, 800);
+		setBounds(1920/2 - 500, 1080/2 - 500, 1000, 1000);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
@@ -63,7 +63,7 @@ public class Application extends JFrame{
 		
 		
 		renderer = new Render();
-		renderer.setBounds(0, 0, 1000, 800);
+		renderer.setBounds(0, 0, 1000, 1000);
 		renderer.setLayout(null);
 		renderer.setOpaque(false);
 		contentPane.add(renderer);
