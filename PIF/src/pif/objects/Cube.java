@@ -189,9 +189,9 @@ public class Cube {
 	/**
 	 * Function that rotates and translate every points of the cube
 	 * 
-	 * @param xdeg The angle of the cube on the X axis (in degrees)
-	 * @param ydeg The angle of the cube on the Y axis (in degrees)
-	 * @param zdeg The angle of the cube on the Z axis (in degrees)
+	 * @param xDeg The angle of the cube on the X axis (in degrees)
+	 * @param yDeg The angle of the cube on the Y axis (in degrees)
+	 * @param zDeg The angle of the cube on the Z axis (in degrees)
 	 * @param dx The position of the cube on the X axis (in meters)
 	 * @param dy The position of the cube on the Y axis (in meters)
 	 * @param dz The position of the cube on the Z axis (in meters)

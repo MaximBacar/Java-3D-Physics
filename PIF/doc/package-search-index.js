@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"pif.engine"},{"l":"pif.objects"},{"l":"pif.points"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"pif.application"},{"l":"pif.engine"},{"l":"pif.objects"},{"l":"pif.physics"},{"l":"pif.points"}]
