@@ -93,8 +93,7 @@ public class Collider {
 			
 			if (Collisions.polygonPolygon(p1, p2) == true) {
 				System.out.println("============================");
-				cubes[nearCubes()[0]].changeDir();
-				cubes[nearCubes()[1]].changeDir();
+				
 			}
 		}
 		

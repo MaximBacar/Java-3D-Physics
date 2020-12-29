@@ -20,6 +20,7 @@ import pif.physics.Vector3D;
 public class Application extends JFrame{
 	
 	private JPanel contentPane;
+	private static Keyboard k;
 	
 	Render renderer;
 
@@ -31,13 +32,14 @@ public class Application extends JFrame{
 				try {
 					
 					
-					
+					k = new Keyboard();
 					Application frame = new Application();
 					frame.getContentPane().setBackground(Color.white);
 					frame.setVisible(true);
 					frame.setFocusable(true);
 					frame.setAutoRequestFocus(true);
 					frame.setCursor(HAND_CURSOR);
+					frame.addKeyListener(k);
 					
 					//frame.setResizable(false);
 					

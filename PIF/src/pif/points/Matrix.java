@@ -47,7 +47,7 @@ public class Matrix {
 	public static Point2D.Double[] to2d (Point3D[] pts) {
 		
 		Point2D.Double[] points = new Point2D.Double[pts.length];
-		double e = 	50.00000;
+		double e = 	65.00000;
 		
 		
 		for (int i = 0; i<points.length; i++) {

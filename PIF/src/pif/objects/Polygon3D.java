@@ -14,6 +14,9 @@ public class Polygon3D {
 	Point3D[] pts;
 	Polygon poly2d;
 	
+	private static int xOffset = -40;
+	private static int yOffset = 0;
+	
 	
 	public Polygon3D (Point3D...pts) {
 		
@@ -34,7 +37,13 @@ public class Polygon3D {
 			
 		}
 		poly2d = polygon;
-		g2d.draw(poly2d);
+		
+		Polygon camera = new Polygon();
+		
+		for (int i = 0; i <poly2d.npoints; i++) {
+			camera.addPoint(poly2d.xpoints[i] + xOffset, poly2d.ypoints[i] + yOffset);
+		}
+		g2d.draw(camera);
 	}
 	
 	public Polygon getPolygon2D () {
@@ -59,6 +68,24 @@ public class Polygon3D {
 		return new Point3D(sumX/pts.length, sumY/pts.length, sumZ/pts.length);
 		
 	}
+
+	public static int getxOffset() {
+		return xOffset;
+	}
+
+	public static void setxOffset(int xOffset) {
+		Polygon3D.xOffset = xOffset;
+	}
+
+	public static int getyOffset() {
+		return yOffset;
+	}
+
+	public static void setyOffset(int yOffset) {
+		Polygon3D.yOffset = yOffset;
+	}
+	
+	
 	
 
 }

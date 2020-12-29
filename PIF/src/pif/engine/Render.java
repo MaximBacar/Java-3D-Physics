@@ -30,7 +30,7 @@ public class Render extends JPanel implements Runnable {
 	
 	private Thread processusAnim;
 	
-	boolean running = false;
+	static boolean running = false;
 	
 	double tempsTotalEcoule = 0;
 	private double deltaT = 0.01;
@@ -43,22 +43,22 @@ public class Render extends JPanel implements Runnable {
 	
 	public Render () {
 		
-		addMouseListener(new MouseInputAdapter() {
+		addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				running = (running) ? false : true;
+			public void mouseDragged(MouseEvent e) {
+				System.out.println(e.getX());
 			}
-		});
+		}); 	
 	
 		
 		
-		c = new Cube(0,10,0,0,0,0);
+		c = new Cube(0,10,0,0,45,0);
 		c2 = new Cube();
-		//c3 = new Cube(0,50,0);
+		c3 = new Cube(-0,20,0);
 		
 		
 		
-		col = new Collider(c,c2);
+		col = new Collider(c,c2, c3);
 		
 		processusAnim = new Thread(this);
 		processusAnim.start();
@@ -104,10 +104,10 @@ public class Render extends JPanel implements Runnable {
 		g2d.setColor(Color.gray);
 		c.render(g2d);
 		c2.render(g2d);
-		//c3.render(g2d);
+		c3.render(g2d);
 		
 		
-		col.update();
+		//col.update();
 		
 	}
 	
@@ -115,7 +115,7 @@ public class Render extends JPanel implements Runnable {
 		tempsTotalEcoule += deltaT;
 		c.oneStep(deltaT);
 		c2.oneStep(deltaT);
-		//c3.oneStep(deltaT);
+		c3.oneStep(deltaT);
 
 
 		//System.out.println("\nTemps total simulé écoulé: "  + String.format("%.3f",tempsTotalEcoule) + "sec (en temps simulé!)");
@@ -134,6 +134,9 @@ public class Render extends JPanel implements Runnable {
 		return (int) ((met + HEIGHT/20)*10)-5;
 	}
 	
+	public static void start () {
+		running = true;
+	}
 	
 
 }
